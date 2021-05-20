@@ -1,4 +1,4 @@
-package ticTacToeProblem;
+package ticTacToe;
 
 import java.util.Scanner;
 
@@ -6,7 +6,7 @@ public class TicTacToeGame
 {
     public static void main(String[] args)
     {
-    	final int MAX_TURNS = 4;
+    	final int MAX_TURNS = 5;
         Scanner input = new Scanner(System.in);
         TicTacToe board = new TicTacToe();
         int row = 0;
@@ -14,8 +14,8 @@ public class TicTacToeGame
         
         boolean gameOver = false;
         boolean doneChoosingSpace = false;
-        System.out.print("*** TIC TAC TOE ***");
-        
+        System.out.println("*** TIC TAC TOE ***");
+        board.printBoard();
         while (!gameOver && board.getTurn() < MAX_TURNS) {
             
             doneChoosingSpace = false;
@@ -43,11 +43,11 @@ public class TicTacToeGame
             }
         }
         
-        if (board.getTurn() == MAX_TURNS) {
-            printTieScreen(board);
+        if(board.checkWin()) {
+        	printWinnerScreen(board);
         }
-        else {
-            printWinnerScreen(board);
+        else if (board.getTurn() == MAX_TURNS) {
+            printTieScreen(board);
         }
     }
     

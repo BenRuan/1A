@@ -1,4 +1,4 @@
-package ticTacToeProblem;
+package ticTacToe;
 
 /**
  * 
@@ -19,7 +19,13 @@ public class TicTacToe {
 	     */
 	    
 	    public TicTacToe() {
-	      
+	    	this.turn = 0;
+	        this.board = new String[3][3];
+	        for(int row = 0; row < board.length; row++){
+	            for(int col = 0; col < board[row].length; col++){
+	                board[row][col] = "-";
+	            }
+	        }
 	    }
 	    
 	    
@@ -30,7 +36,7 @@ public class TicTacToe {
 	     */
 	    
 	    public int getTurn() {
-	    	
+	    	return turn;
 	    }
 	    
 	    
@@ -42,8 +48,14 @@ public class TicTacToe {
 	    
 	   public void printBoard()
 	   {
-	       
-	       
+		   System.out.println("  0 1 2");
+	       for(int row = 0; row < board.length; row++){
+	           System.out.print(row + " ");
+	           for(int col = 0; col < board[row].length; col++){
+	               System.out.print(board[row][col] + " ");
+	           }
+	           System.out.println();
+	       }
 	   }
 	   
 	   /**
@@ -55,7 +67,7 @@ public class TicTacToe {
 	   
 	   public boolean pickLocation(int row, int col)
 	   {
-	        
+		   return(row < 3 && row > -1 && col < 3 && col > -1 && board[row][col].equals("-"));
 	   }
 	   
 	   /**
@@ -65,7 +77,13 @@ public class TicTacToe {
 	   
 	   public void takeTurn(int row, int col)
 	   {
-	      
+		   if(turn % 2 == 0){
+	           board[row][col] = "X";
+	       }
+	       else{
+	           board[row][col] = "O";
+	       }
+	       turn++;
 	   }
 	   
 	   /**
@@ -77,7 +95,24 @@ public class TicTacToe {
 	   
 	   public boolean checkRow()
 	   {
-	   
+		   int countO = 0;
+	       int countX = 0;
+	       for(int row = 0; row < board.length; row++){
+	           for(int col = 0; col < board[row].length; col++){
+	                if(board[row][col].equals("O")){
+	                    countO++;
+	                }
+	                else if(board[row][col].equals("X")){
+	                    countX++;
+	                }
+	           }
+	           if(countO == 3 || countX == 3){
+	               return true;
+	           }
+	           countO = 0;
+	           countX = 0;
+	       }
+	       return false;
 	   }
 	   
 	   
@@ -89,7 +124,24 @@ public class TicTacToe {
 	   
 	   public boolean checkCol()
 	   {
-	          
+		   int countO = 0;
+	       int countX = 0;
+	       for(int row = 0; row < board.length; row++){
+	           for(int col = 0; col < board[row].length; col++){
+	                if(board[col][row].equals("O")){
+	                    countO++;
+	                }
+	                else if(board[col][row].equals("X")){
+	                    countX++;
+	                }
+	           }
+	           if(countO == 3 || countX == 3){
+	               return true;
+	           }
+	           countO = 0;
+	           countX = 0;
+	       }
+	       return false;
 	   }
 	   
 	   
@@ -101,7 +153,31 @@ public class TicTacToe {
 	   
 	   public boolean checkDiag()
 	   {
-
+		   int countO = 0;
+	       int countX = 0;
+	       int countO2 = 0;
+	       int countX2 = 0;
+	       for(int i = 0; i < board.length; i++){
+	           if(board[i][i].equals("X")){
+	               countX++;
+	           }
+	           else if(board[i][i].equals("O")){
+	               countO++;
+	           }
+	           
+	           if(board[i][2-i].equals("X")){
+	               countX2++;
+	           }
+	           else if(board[i][2-i].equals("O")){
+	               countO2++;
+	           }
+	       }
+	       if(countO == 3 || countX == 3 || countO2 == 3 || countX2 == 3){
+	           return true;
+	       }
+	       else{
+	           return false;
+	       }
 	   }
 	   
 	   /**
@@ -111,7 +187,7 @@ public class TicTacToe {
 	    */
 	   public boolean checkWin()
 	   {
-	       
+		   return(checkCol() || checkRow() || checkDiag());
 	   }
 
 }
